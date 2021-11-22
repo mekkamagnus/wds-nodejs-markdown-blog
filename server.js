@@ -15,7 +15,8 @@ app.use("/articles", articleRouter);
 // Create route at index
 app.get("/", (req, res) => {
   // Render out index.ejs
-  res.render("index");
+  // Pass text JavaScript variable from Node.js to index.ejs
+  res.render("index", { text: "articles" });
 });
 
 // Create route

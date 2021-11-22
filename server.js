@@ -1,5 +1,7 @@
 // Create server
 const express = require("express");
+// Require our router
+const articleRouter = require("./routes/articles.js");
 // Get app variable
 const app = express();
 
@@ -7,6 +9,8 @@ const app = express();
 
 // Set view engine to ejs
 app.set("view engine", "ejs");
+
+app.use("/articles", articleRouter);
 
 // Create route at index
 app.get("/", (req, res) => {

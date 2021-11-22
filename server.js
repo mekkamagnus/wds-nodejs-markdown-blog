@@ -15,8 +15,23 @@ app.use("/articles", articleRouter);
 // Create route at index
 app.get("/", (req, res) => {
   // Render out index.ejs
+
+  // Array data
+  const articles = [
+    {
+      title: "Test Article One",
+      createdAt: new Date(),
+      description: "Test Description",
+    },
+    {
+      title: "Test Article Two",
+      createdAt: new Date(),
+      description: "Test Description",
+    },
+  ];
+
   // Pass text JavaScript variable from Node.js to index.ejs
-  res.render("index", { text: "articles" });
+  res.render("index", { articles: articles });
 });
 
 // Create route

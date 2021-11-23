@@ -2,6 +2,8 @@
 const express = require("express");
 // Require mongoose library
 const mongoose = require("mongoose");
+// Require article model
+const Article = require("./models/article");
 // Require our router
 const articleRouter = require("./routes/articles.js");
 // Get app variable
@@ -19,29 +21,22 @@ mongoose.connect("mongodb://localhost/blog", {
 // Set view engine to ejs
 app.set("view engine", "ejs");
 
-app.use("/articles", articleRouter);
+// Everything for can be accessed from the form object.
+app.use(express.urlencoded({ extended: false }));
 
 // Create route for index
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   // Render out index.ejs
 
-  // Array data
-  const articles = [
-    {
-      title: "Test Article One",
-      createdAt: new Date(),
-      description: "Test Description",
-    },
-    {
-      title: "Test Article Two",
-      createdAt: new Date(),
-      description: "Test Description",
-    },
-  ];
-
+  // Pull all articles in the database
+  const articles = await Article.find().sort({
+    createdAt: "desc",
+  });
   // Pass text JavaScript variable from Node.js to index.ejs
   res.render("articles/index", { articles: articles });
 });
+
+app.use("/articles", articleRouter);
 
 // Create route
 app.listen(5000);
